@@ -16,7 +16,7 @@
 
     /* Colori Aurora */
     --aurora-color-1: rgba(217, 229, 255, 0.5); /* Azzurro tenue */
-    --aurora-color-2: rgba(255, 234, 217, 0.5); /* Pesca tenue */
+    --aurora-color-2: rgba(250, 137, 44, 0.572); /* Pesca tenue */
 
     /* Tipografia */
     --font-sans: 'Inter', sans-serif;
@@ -36,8 +36,6 @@ body {
     line-height: 1.7;
     color: var(--text-primary);
     background-color: var(--bg-primary);
-    background-image: radial-gradient(hsla(0, 0%, 50%, 0.3) 1px, transparent 1px);
-    background-size: 24px 24px;
     position: relative;
     overflow-x: hidden;
 }
@@ -78,40 +76,57 @@ a:hover {
     padding: 0 24px;
 }
 
-/* Bottone Primario con Effetto Sheen */
-.button-primary {
-    display: inline-block;
+/* This wrapper will contain all your page content and sit on top 
+  of the aurora blobs.
+*/
+.content-wrapper {
     position: relative;
-    overflow: hidden;
-    z-index: 1;
-    background-color: var(--accent-primary);
-    color: white;
-    font-weight: 600;
-    padding: 16px 32px;
-    border-radius: 8px;
-    text-decoration: none;
-    box-shadow: 0 4px 15px rgba(255, 111, 0, 0.2);
-    transition: all 0.3s ease;
+    z-index: 2;
+    background-color: transparent; /* Make sure it doesn't hide the blobs */
 }
+
+.button-primary {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background-color: var(--accent-primary);
+  color: white;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(255, 111, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
 .button-primary:hover {
-    background-color: var(--accent-hover);
-    color: white; /* Assicura che il testo resti bianco */
-    transform: translateY(-3px);
-    box-shadow: 0 7px 20px rgba(255, 111, 0, 0.3);
+  background-color: var(--accent-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(255, 111, 0, 0.3);
+  color: var(--bg-secondary);
 }
+
 .button-primary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -150%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
-    transform: skewX(-25deg);
-    transition: left 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  transition: left 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
 .button-primary:hover::before {
-    left: 150%;
+  left: 125%;
 }
 
 /* 4. Effetto Aurora di Sfondo */
@@ -124,12 +139,12 @@ a:hover {
 }
 .aurora-blob {
     position: fixed;
-    width: 800px;
-    height: 800px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    z-index: 0;
-    opacity: 0.15;
-    filter: blur(140px);
+    z-index: 1;
+    opacity: 0.7;
+    filter: blur(300px);
     will-change: transform;
 }
 .aurora-blob-1 {
@@ -145,10 +160,96 @@ a:hover {
     animation: move-aurora 70s linear infinite alternate-reverse;
 }
 
+
+/* 4a. Footer */
+
+footer {
+  background-color: #fafafa;
+  border-top: 1px solid var(--border-color);
+  padding: 64px 0;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 0 20px;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-logo {
+  max-height: 40px;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-nav a {
+    font-weight: 300;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.footer-nav a:hover {
+  color:  var(--accent-primary);
+  text-shadow: 0 0 8px #ffa25c87;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    margin: 12px 0;
+  }
+}
+
+
+
+
 /* 5. Stili per la Hero Section */
+
+
+#hero-bg {
+        background-color: var(--bg-primary);
+    background-image: radial-gradient(hsla(0, 0%, 50%, 0.3) 1px, transparent 1px);
+    background-size: 24px 24px;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+
 .hero-section {
-    background-color: var(--bg-secondary);
-    min-height: 90vh;
+    color: var(--text-primary);
+    position: relative;
+    overflow-x: hidden;
+ 
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,10 +263,73 @@ a:hover {
     max-width: 700px;
     margin: 24px auto 32px auto;
 }
+/* Container base */
+.animated-hero {
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+/* Fade + Slide Up */
+.animate-fade-slide {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeSlideUp 1s ease-out forwards;
+}
+
+.delay-1 {
+  animation-delay: 0.3s;
+}
+.delay-2 {
+  animation-delay: 0.6s;
+}
+
+@keyframes fadeSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CTA button pulse once */
+.animate-cta {
+  animation: buttonPulse 1s ease-out 1 forwards;
+}
+
+@keyframes buttonPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 111, 0, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 111, 0, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(255, 111, 0, 0.2);
+  }
+}
+
 
 /* 6. Stili per la Pain Points Section */
+#painCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.pain-points-section .container {
+  position: relative;
+  z-index: 10;
+}
+
+
+
 .pain-points-section {
-    padding: 128px 0;
+    padding: 12vh 0;
     background-color: var(--bg-primary); /* Assicuriamo sfondo solido per la sezione */
 }
 .pain-points-section .section-title,
@@ -173,29 +337,92 @@ a:hover {
     text-align: center;
 }
 .pain-points-section .section-subtitle {
-    margin-bottom: 64px;
+    margin-bottom: 84px;
 }
 .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 32px;
-    text-align: left;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
 }
 .card {
-    background-color: white;
-    padding: 32px;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  overflow: hidden;
+  transition: transform 0.4s ease;
 }
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
-    border-color: var(--accent-hover);
+
+.card-content {
+  transition: transform 0.4s ease;
 }
-.card h3 {
-    margin-bottom: 16px;
+
+.card-metric {
+  position: absolute;
+  bottom: -60px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(255, 111, 0, 0.07);
+  color: #FF6F00;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 12px 0;
+  border-top: 1px solid #ffd1ac;
+  transition: bottom 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+
+.card:hover .card-content {
+  transform: translateY(-20px);
+}
+
+.card:hover .card-metric {
+  bottom: 0;
+  opacity: 1;
+}
+
+/* Linea animata sui bordi */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(120deg, transparent, #FF6F00, transparent);
+  background-size: 300% 300%;
+  background-position: 0% 50%;
+  transition: background-position 0.8s ease;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  pointer-events: none;
+}
+
+.card:hover::before {
+  background-position: 100% 50%;
+}
+
+/* Numero rivelato */
+.card-metric {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  background-color: rgba(255,111,0,0.1);
+  color: #FF6F00;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+}
+
+.card:hover .card-metric {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* 7. Stili per la Services Section
@@ -208,9 +435,13 @@ a:hover {
 .services-section .section-header {
     text-align: center;
     max-width: 650px;
-    margin: 0 auto 64px auto;
+    margin: 0 auto 4rem auto;
+ 
 }
-
+.services-section .section-subtitle {
+    max-width: 700px;
+    margin: 24px auto 32px auto;
+}
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -218,7 +449,7 @@ a:hover {
 }
 
 .service-card {
-    background-color: white;
+    background-color: var(--bg-secondary);
     padding: 32px;
     border: 1px solid var(--border-color);
     border-radius: 12px;
@@ -228,6 +459,8 @@ a:hover {
     display: flex;
     flex-direction: column;
 }
+
+
 
 .service-card:hover {
     transform: translateY(-5px);
@@ -246,13 +479,196 @@ a:hover {
 
 .service-card h3 {
     margin-bottom: 16px;
+
 }
 
 .service-card p {
     flex-grow: 1; /* Fa in modo che il testo occupi lo spazio disponibile */
     margin-bottom: 32px;
+    color: var(--text-primary);
 }
 
 .service-card .card-link {
     font-weight: 600;
 }
+
+/* 7. Stili per la How It Works Section
+-------------------------------------------------- */
+.how-it-works-section {
+    background-color: transparent; /* Lasciamo vedere lo sfondo del body */
+    padding: 128px 0;
+}
+
+.how-it-works-section .section-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 64px auto;
+}
+
+.process-steps {
+    position: relative;  
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    --line-scale: 0; 
+}
+
+/* La linea di connessione verticale */
+.process-steps::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: 23px; /* Centrata rispetto al cerchio di 48px */
+    bottom: 24px;
+    width: 2px;
+    background-color: var(--border-color);
+    z-index: 0;
+    transform: scaleY(var(--line-scale, 0)); 
+    transform-origin: top; /* L'animazione partirà dall'alto */
+}
+
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    /* Le righe "opacity: 0" e "transform: translateX(-30px)" sono state rimosse da qui */
+}
+
+.step-number {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--text-heading);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    z-index: 1; /* Sta sopra la linea di connessione */
+}
+
+.step-content h3 {
+    margin-bottom: 8px;
+}
+
+/* 8. Stili per la Why Us Section
+-------------------------------------------------- */
+.why-us-section {
+    padding: 128px 0;
+    background-color: var(--bg-primary);
+}
+
+.why-us-section .section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 64px auto;
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: stretch;
+}
+
+.comparison-card {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  
+}
+
+.comparison-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.comparison-card p {
+    color: var(--text-primary);
+    opacity: 0.7;
+    margin-bottom: 24px;
+}
+
+.comparison-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.comparison-card ul li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon-bad {
+    color: #9ca3af;
+}
+
+.icon-good {
+    color: var(--accent-primary);
+}
+
+/* Stile di enfasi per la card ZenOps */
+.zenops-method {
+    border-width: 2px;
+    border-color: var(--accent-primary);
+    transform: scale(1.02); /* Leggermente più grande per attirare l'attenzione */
+    box-shadow: 0 10px 30px rgba(255, 111, 0, 0.1);
+}
+
+/* Responsive per schermi piccoli */
+@media (max-width: 768px) {
+    .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 9. Stili per la Services Section
+-------------------------------------------------- */
+
+.why-us-section {
+    padding: 128px 0;
+}
+
+.testimonials-section .section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 64px auto;
+}
+
+/* 10. Stili per la Final CTA Section
+-------------------------------------------------- */
+
+.final-cta-section {
+    background-color: var(--text-heading); 
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 0;
+    margin: 4em auto;
+}
+
+.final-cta-section .cta-title {
+    max-width: 700px;
+    margin: 0 auto 0 auto;
+    color: var(--bg-primary)
+}
+ 
+.final-cta-section .cta-subtitle {
+    max-width: 600px;
+    margin: 0 auto 4em auto;
+    color: var(--bg-primary);
+}
+
+ 
